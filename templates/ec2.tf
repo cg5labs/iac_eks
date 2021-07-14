@@ -18,22 +18,6 @@ provider "random" {}
 
 resource "random_pet" "name" {}
 
-resource "aws_vpc" "bastion_vpc" {
-  cidr_block = "172.17.0.0/29"
-
-  tags = {
-    Name = "bastion-vpc"
-  }
-}
-
-resource "aws_subnet" "bastion_subnet" {
-  vpc_id            = aws_vpc.web_vpc.id
-  cidr_block        = "172.17.10.0/24"
-
-  tags = {
-    Name = "bastion-subnet"
-  }
-}
 
 resource "aws_key_pair" "deployer" {
   key_name   = "deployer-key"
@@ -43,7 +27,7 @@ resource "aws_key_pair" "deployer" {
 resource "aws_instance" "bastion" {
   ami           = data.aws_ami.ubuntu.id
   key_name      = "deployer-key"
-  instance_type = "t2.micro"
+  instance_type = "t2.nano"
   monitoring    = true
   vpc_security_group_ids = [aws_security_group.bastion-sg.id]
 
