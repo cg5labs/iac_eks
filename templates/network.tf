@@ -2,7 +2,6 @@
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "2.7.0"
 
   name = "${var.cluster-name}-eks-vpc"
 
