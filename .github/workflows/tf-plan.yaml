@@ -41,7 +41,8 @@ jobs:
       
     - name: Terraform init
       run: |
-          /usr/bin/terraform -chdir="${GITHUB_WORKSPACE}/templates" init \
+          cd "${GITHUB_WORKSPACE}/templates" && \
+          /usr/bin/terraform  init \
             -backend=true \
             -backend-config="dynamodb_table=tf-remote-state-lock" \
             -backend-config="bucket=tc-remotestate-${TFSTATE_ID}"
