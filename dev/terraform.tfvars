@@ -1,2 +1,2 @@
 # dev env
-aws_region = "ap-southeast-1"
+aws-region = "ap-southeast-1"
