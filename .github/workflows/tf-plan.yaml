@@ -51,6 +51,7 @@ jobs:
 
     - name: Terraform plan
       run: |
-          /usr/bin/terraform -chdir="${GITHUB_WORKSPACE}/templates" \
-            plan -var-file="../${AWSENV}/terraform.tfvars"
+          cd "${GITHUB_WORKSPACE}/templates" && \
+          /usr/bin/terraform plan \
+            -var-file="../${AWSENV}/terraform.tfvars"
       
