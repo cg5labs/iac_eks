@@ -2,7 +2,7 @@ region = "ap-southeast-1"
 
 availability_zones = ["ap-southeast-1a", "ap-southeast-1b", "ap-southeast-1c"]
 
-vpc_cidr_block = "172.16.0.0/16"
+#vpc_cidr_block = "172.16.0.0/16"
 
 namespace = "edu"
 
