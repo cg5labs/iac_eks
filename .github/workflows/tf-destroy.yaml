@@ -32,20 +32,23 @@ jobs:
 
     - name: Terraform init
       run: |
-          /usr/bin/terraform -chdir="${GITHUB_WORKSPACE}/templates" init \
+          cd "${GITHUB_WORKSPACE}/templates" && \
+          /usr/bin/terraform init \
             -backend=true \
             -backend-config="dynamodb_table=tf-remote-state-lock" \
             -backend-config="bucket=tc-remotestate-${TFSTATE_ID}"
 
     - name: Terraform refresh
       run: |
-          /usr/bin/terraform -chdir="${GITHUB_WORKSPACE}/templates" \
+          cd "${GITHUB_WORKSPACE}/templates" && \
+          /usr/bin/terraform \
             refresh \
             -var-file="../${AWSENV}/terraform.tfvars"
 
     - name: Terraform destroy
       run: |
-          /usr/bin/terraform -chdir="${GITHUB_WORKSPACE}/templates" \
+          cd "${GITHUB_WORKSPACE}/templates" && \
+          /usr/bin/terraform \
             destroy -auto-approve \
             -var-file="../${AWSENV}/terraform.tfvars"
 

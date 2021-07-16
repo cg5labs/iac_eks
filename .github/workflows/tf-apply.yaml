@@ -37,32 +37,30 @@ jobs:
  
     - name: Terraform init
       run: |
-          /usr/bin/terraform -chdir="${GITHUB_WORKSPACE}/templates" init \
+          cd "${GITHUB_WORKSPACE}/templates" && \
+          /usr/bin/terraform init \
             -backend=true \
             -backend-config="dynamodb_table=tf-remote-state-lock" \
             -backend-config="bucket=tc-remotestate-${TFSTATE_ID}"
 
     - name: Terraform apply
-      run: |
-          /usr/bin/terraform -chdir="${GITHUB_WORKSPACE}/templates" \
+      run: | 
+          cd "${GITHUB_WORKSPACE}/templates" && \
+          /usr/bin/terraform  \
             apply -auto-approve \
             -var-file="../${AWSENV}/terraform.tfvars"
 
-    - name: Terraform output
-      run: |
-          /usr/bin/terraform -chdir="${GITHUB_WORKSPACE}/templates" \
-            output -json instance_public_ip
-
     - name: Terraform output to file
       run: |
-          /usr/bin/terraform -chdir="${GITHUB_WORKSPACE}/templates" \
-            output -json instance_public_ip > ${GITHUB_WORKSPACE}/tf_value.txt
+          cd "${GITHUB_WORKSPACE}/templates" && \
+          /usr/bin/terraform  \
+            output -json > ${GITHUB_WORKSPACE}/tf_output.txt
 
-    - name: Upload tf_value.txt
+    - name: Upload tf_output.txt
       uses: actions/upload-artifact@v2
       with:
-        name: tf_value.txt
-        path: tf_value.txt
+        name: tf_output.txt
+        path: tf_output.txt
 
     - uses: gliech/create-github-secret-action@v1
       with:
